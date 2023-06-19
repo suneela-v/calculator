@@ -2,45 +2,27 @@ import React, { useState } from "react";
 import { OutputRow } from "./OutputRow";
 export const Button = ({ getOutput }) => {
   let [newvalx, setNewvalx] = useState("");
-  const [res,setRes]=useState(0)
+  const [res, setRes] = useState(0);
+  const handleCalculate = () => {
+    const resulthere =eval(newvalx)
+    setRes(resulthere);
+    setNewvalx("");
+  };
+  const handleDelete = () => {
+    setNewvalx("");
+    setRes(0);
+  };
+  const handleClear = () => {};
   const handleClick = (e) => {
-    //  console.log(e.target)
-    doCal(e.target.value);
+    newvalx += e.target.value;    
+    setNewvalx(newvalx);
   };
-  const doCal = (val) => {
-    console.log(val);
-
-    //if(!val) return
-    // if(val != "delete" && val!== "clear"  ){}
-    if (val == "delete") {
-      val = 0;
-      setNewvalx("");
-      setRes((result)=>0)
-       getOutput(res);
-    } else {
-      //  else{
-      if (val == "=") {
-        // console.log(val, eval(newval));
-        // newval=""
-
-        console.log(val, eval(newvalx));
-        setRes(result =>eval(newvalx));
-        getOutput(res)
-        setNewvalx(result=>"");
-      } else {
-        //  newval+=val;console.log(newval,"in else")
-        newvalx += val;
-        console.log(newvalx, "in else");
-        setNewvalx(result=>newvalx);
-      }
-    }
-    // }
-  };
+  
   return (
     <>
       <div>
-        <input type="button" value={"delete"} onClick={handleClick} />
-        <input type="button" value={"clear"} onClick={handleClick} />
+        <input type="button" value={"delete"} onClick={handleDelete} />
+        <input type="button" value={"clear"} onClick={handleClear} />
         <input type="button" value={"."} onClick={handleClick} />
         <input type="button" value={"/"} onClick={handleClick} />
       </div>
@@ -64,7 +46,7 @@ export const Button = ({ getOutput }) => {
       </div>
       <div>
         <input type="button" value={"0"} onClick={handleClick} />
-        <input type="button" value={"="} onClick={handleClick} />
+        <input type="button" value={"="} onClick={handleCalculate} />
       </div>
     </>
   );
